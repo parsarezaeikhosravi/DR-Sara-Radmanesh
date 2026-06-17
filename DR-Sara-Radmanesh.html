@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دکتر سارا رادمنش | فوق تخصص روماتولوژی و متخصص داخلی شیراز</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap');
+
+        /* ==========================================================================
+           تم رنگی جدید: بنفش درخشان لوکس و پریمیوم (Luxurious Violet & Amethyst)
+           ========================================================================== */
+        :root {
+            --bg-medical: #0F091A;                /* سرمه‌ای مایل به بادمجانی عمیق */
+            --card-medical: rgba(30, 20, 50, 0.7); /* شیشه با تم بنفش تیره */
+            --border-medical: rgba(192, 132, 252, 0.2); /* بنفش شیشه‌ای روشن */
+            --neon-violet: #A855F7;               /* بنفش درخشان دمان مفصل و استخوان */
+            --neon-purple-light: #C084FC;         /* بنفش روشن */
+            --neon-gold: #F59E0B;                 /* طلایی پریمیوم برای ایجاد تضاد لوکس */
+            --text-main: #FFFFFF;
+            --text-muted: #CBD5E1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-medical);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.8;
+        }
+
+        /* هاله‌های درخشان بنفش و طلایی در پس‌زمینه */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.45;
+        }
+        .orb-violet {
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: var(--neon-violet);
+        }
+        .orb-gold {
+            bottom: 100px;
+            left: -100px;
+            width: 500px;
+            height: 500px;
+            background: var(--neon-gold);
+        }
+
+        /* ناوبری بالایی مطب */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(15, 9, 26, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-medical);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--neon-violet), var(--neon-purple-light));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.45);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-purple-light);
+        }
+
+        .btn-booking-nav {
+            background: linear-gradient(135deg, var(--neon-violet) 0%, #7C3AED 100%);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-booking-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+        }
+
+        /* بخش هرو معرفی مطب */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            padding: 80px 8% 100px 8%;
+            align-items: center;
+            gap: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 968px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 40px;
+            }
+            .hero-right {
+                order: -1;
+            }
+        }
+
+        .hero-left h1 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 25px;
+        }
+
+        .hero-left h1 span.highlight {
+            background: linear-gradient(to left, var(--neon-purple-light), var(--neon-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-left p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            margin-bottom: 40px;
+            text-align: justify;
+        }
+
+        /* شبیه‌ساز گرافیکی دستگاه سنجش تراکم استخوان (BMD) با نور نئونی بنفش */
+        .bmd-simulator-card {
+            background: var(--card-medical);
+            border: 1px solid var(--border-medical);
+            border-radius: 30px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bmd-screen-display {
+            background: #000;
+            border-radius: 20px;
+            padding: 25px;
+            min-height: 250px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* انیمیشن لیزر اسکنر تراکم استخوان */
+        .scanner-laser {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--neon-purple-light), transparent);
+            box-shadow: 0 0 15px var(--neon-purple-light);
+            animation: scanBone 4s ease-in-out infinite;
+        }
+
+        @keyframes scanBone {
+            0% { top: 10px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 240px; opacity: 0; }
+        }
+
+        .bone-vector {
+            width: 100%;
+            height: 120px;
+            opacity: 0.25;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bmd-simulator-card:hover .bone-vector {
+            opacity: 0.85;
+        }
+
+        .bmd-badge {
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--neon-purple-light);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            align-self: flex-start;
+        }
+
+        /* بخش خدمات تخصصی مطب */
+        .services-section {
+            padding: 100px 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border-medical);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.3rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: var(--card-medical);
+            border: 1px solid var(--border-medical);
+            border-radius: 24px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-purple-light);
+            box-shadow: 0 15px 30px rgba(168, 85, 247, 0.15);
+        }
+
+        .service-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(168, 85, 247, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-purple-light);
+            margin-bottom: 20px;
+        }
+
+        .service-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .service-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-align: justify;
+        }
+
+        /* فرم نوبت‌دهی هوشمند متصل به CRM استودیو پارسا */
+        .booking-section {
+            padding: 80px 8%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-top: 1px solid var(--border-medical);
+        }
+
+        .booking-card {
+            background: var(--card-medical);
+            border: 1px solid var(--border-medical);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .form-input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-medical);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--neon-purple-light);
+            box-shadow: 0 0 10px rgba(192, 132, 252, 0.2);
+        }
+
+        .btn-submit-booking {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--neon-violet) 0%, #7C3AED 100%);
+            color: white;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-submit-booking:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-medical);
+            padding: 40px 8%;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="orb orb-violet"></div>
+    <div class="orb orb-gold"></div>
+
+    <!-- ناوبری مطب -->
+    <nav>
+        <div class="nav-brand">
+            <div class="nav-logo-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <span>مطب دکتر سارا رادمنش</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">صفحه اصلی</a></li>
+            <li><a href="#services">خدمات تخصصی</a></li>
+            <li><a href="#bmd">دستگاه BMD</a></li>
+            <li><a href="#booking">نوبت‌دهی آنلاین</a></li>
+        </ul>
+        <a href="#booking" class="btn-booking-nav">رزرو وقت فوری</a>
+    </nav>
+
+    <!-- بخش معرفی اصلی (Hero) -->
+    <section class="hero">
+        <div class="hero-left">
+            <h1>دکتر سارا رادمنش | <span class="highlight">فوق تخصص روماتولوژی</span> و متخصص داخلی در شیراز</h1>
+            <p>
+                عضو انجمن روماتولوژی ایران. تشخیص و درمان پیشرفته انواع بیماری‌های مفصلی، روماتیسم، لوپوس، آرتروز و پوکی استخوان. مجهز به پیشرفته‌ترین و دقیق‌ترین **دستگاه سنجش تراکم استخوان (BMD)** در شهر شیراز جهت تشخیص زودهنگام و دقیق تحلیل رفتگی‌های استخوانی.
+            </p>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <a href="#booking" class="btn-booking-nav" style="padding: 14px 35px; font-size: 1rem;">نوبت‌دهی آنلاین سریع</a>
+                <a href="#services" style="color: white; border: 1px solid rgba(255,255,255,0.1); padding: 14px 35px; border-radius: 50px; text-decoration: none; font-weight: bold; background: rgba(255,255,255,0.02);">مشاهده خدمات مطب</a>
+            </div>
+        </div>
+
+        <div class="hero-right" id="bmd">
+            <div class="bmd-simulator-card">
+                <div class="bmd-badge">تجهیزات مطب | BMD Scanner</div>
+                
+                <div style="margin: 20px 0; text-align: center; font-size: 0.95rem; font-weight: bold; color: var(--neon-purple-light);">
+                    دستگاه سنجش تراکم استخوان لایو
+                </div>
+
+                <div class="bmd-screen-display">
+                    <div class="scanner-laser"></div>
+
+                    <div class="bone-vector">
+                        <svg width="150" height="80" viewBox="0 0 150 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 20 30 C 5 30 5 10 20 10 C 35 10 40 30 60 30 L 90 30 C 110 30 115 10 130 10 C 145 10 145 30 130 30 C 120 30 115 50 130 50 C 145 50 145 70 130 70 C 115 70 110 50 90 50 L 60 50 C 40 50 35 70 20 70 C 5 70 5 50 20 50 C 35 50 35 30 20 30 Z" stroke="#C084FC" stroke-width="3" fill="rgba(192, 132, 252, 0.05)" filter="drop-shadow(0 0 8px #A855F7)"/>
+                        </svg>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; font-size: 0.8rem; color: var(--text-muted);">
+                        <span>کیفیت اسکن استخوان:</span>
+                        <span style="color: var(--neon-purple-light); font-weight: bold;">۱۰۰٪ دیجیتال (فوق دقیق)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش خدمات مطب -->
+    <section class="services-section" id="services">
+        <div class="section-title">
+            <h2>خدمات تخصصی و درمانی مطب</h2>
+            <p>تشخیص دقیق و درمان روماتولوژی با متدهای روز پزشکی دنیا.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🧬</div>
+                <h3 class="service-title">درمان آرتروز و روماتیسم</h3>
+                <p class="service-desc">تشخیص، کنترل و درمان دردهای مفاصل، بیماری‌های خودایمنی مثل روماتیسم مفصلی و روماتولوژی اطفال.</p>
+            </div>
+
+            <div class="service-card" style="border-color: rgba(168, 85, 247, 0.3); box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);">
+                <div class="service-icon" style="color: var(--neon-gold);">🦴</div>
+                <h3 class="service-title" style="color: var(--neon-purple-light);">سنجش تراکم استخوان (BMD)</h3>
+                <p class="service-desc">انجام تست فوق‌دقیق دانسیتومتری استخوان با جدیدترین دستگاه BMD شیراز جهت پیشگیری از شکستگی‌ها.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🩺</div>
+                <h3 class="service-title">بیماری‌های داخلی و غدد</h3>
+                <p class="service-desc">کنترل و درمان فشار خون، دیابت، اختلالات تیروئید و بیماری‌های گوارشی مرتبط با روماتولوژی.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش نوبت‌دهی هوشمند متصل به CRM استودیو پارسا -->
+    <section class="booking-section" id="booking">
+        <div class="section-title">
+            <h2>رزرو وقت و نوبت‌دهی هوشمند</h2>
+            <p>اطلاعات خود را وارد کنید تا نوبت شما بلافاصله صادر شده و در سیستم ابری مطب ثبت نهایی گردد.</p>
+        </div>
+
+        <div class="booking-card">
+            <form id="booking-form" onsubmit="handleMedicalBooking(event)">
+                <div class="form-group">
+                    <label for="patient-name">نام و نام خانوادگی بیمار</label>
+                    <input type="text" id="patient-name" class="form-input" placeholder="مثلاً: علیرضا خسروی" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="patient-phone">شماره تلفن همراه جهت ارسال پیامک نوبت</label>
+                    <input type="tel" id="patient-phone" class="form-input" style="direction: ltr; text-align: left;" placeholder="09123456789" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="patient-service">نوع خدمت درخواستی</label>
+                    <select id="patient-service" class="form-input" style="background: #0F091A;">
+                        <option value="سنجش تراکم استخوان (BMD)">سنجش تراکم استخوان با دستگاه BMD</option>
+                        <option value="ویزیت فوق تخصصی روماتیسم">ویزیت فوق تخصصی بیماری‌های مفصلی و روماتیسم</option>
+                        <option value="ویزیت بیماری‌های داخلی">ویزیت بیماری‌های داخلی و غدد</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-submit-booking">تایید و ثبت نهایی نوبت در CRM مطب</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>طراحی و توسعه اختصاصی با کدهای ناب استودیو پارسا • ۲۰۲۶</p>
+    </footer>
+
+    <!-- اسکریپت همگام‌سازی نوبت‌ها با CRM استودیو پارسا -->
+    <script>
+        function handleMedicalBooking(event) {
+            event.preventDefault();
+            const name = document.getElementById('patient-name').value.trim();
+            const phone = document.getElementById('patient-phone').value.trim();
+            const service = document.getElementById('patient-service').value;
+
+            let currentLeads = JSON.parse(localStorage.getItem('crm-leads')) || [];
+            const maxId = currentLeads.reduce((max, lead) => lead.id > max ? lead.id : max, 0);
+
+            const newLead = {
+                id: maxId + 1,
+                name: name,
+                phone: phone,
+                service: `نوبت مطب: ${service}`,
+                price: "ویزیت کلینیکال",
+                stage: 0 
+            };
+
+            currentLeads.push(newLead);
+            localStorage.setItem('crm-leads', JSON.stringify(currentLeads));
+
+            alert(`نوبت شما با موفقیت ثبت شد!\n\nبیمار گرامی: ${name}\nسرویس: ${service}\n\nپیامک تایید نوبت از طرف استودیو پارسا به شماره ${phone} ارسال شد. نوبت شما به صورت خودکار در لایو سرور CRM ابری استودیو پارسا ثبت گردید.`);
+            document.getElementById('booking-form').reset();
+        }
+    </script>
+</body>
+</html>

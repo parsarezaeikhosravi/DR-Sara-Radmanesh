@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آزمایشگاه لایو ۱۰ ایده طلایی | مطب دکتر سارا رادمنش</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap');
+
+        :root {
+            --bg: #090D1A;                        
+            --card-bg: rgba(20, 30, 55, 0.65);    
+            --card-border: rgba(255, 255, 255, 0.12); 
+            --neon-orange: #FF7A00;               
+            --neon-gold: #F59E0B;                 
+            --neon-teal: #06B6D4;                 
+            --neon-glow: rgba(255, 122, 0, 0.25);  
+            --text-main: #FFFFFF;                 
+            --text-muted: #94A3B8;                
+            --success: #10B981;
+            --danger: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* سایدبار سمت راست جهت سوئیچ بین ۱۰ ایده طلایی */
+        .sidebar {
+            width: 320px;
+            background: rgba(15, 23, 42, 0.95);
+            border-left: 1px solid var(--card-border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 968px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-left: none;
+                border-bottom: 1px solid var(--card-border);
+            }
+        }
+
+        .sidebar-header {
+            font-size: 1.1rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            text-align: center;
+            background: linear-gradient(to left, #FFFFFF, var(--neon-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 12px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: start;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            margin-bottom: 8px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: rgba(255, 122, 0, 0.1);
+            border-color: var(--neon-orange);
+            color: var(--neon-gold);
+            box-shadow: 0 0 15px rgba(255, 122, 0, 0.1);
+        }
+
+        /* محفظه اصلی لود لایو پایلوت‌ها */
+        .viewport {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .pilot-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            display: none;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .pilot-container.active {
+            display: block;
+        }
+
+        .pilot-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: var(--neon-gold);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 10px;
+        }
+
+        .pilot-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        /* استایل‌های مشترک دکمه‌ها و فیلدهای آزمایشگاه */
+        .btn-action {
+            background: linear-gradient(135deg, var(--neon-orange), var(--neon-gold));
+            color: black;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        .input-field {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .input-field:focus {
+            border-color: var(--neon-teal);
+        }
+
+        /* استایل‌های اختصاصی خروجی‌ها */
+        .output-box {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* اسکلت تعاملی (SVG) */
+        .skeletal-svg-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .bone-node {
+            cursor: pointer;
+            transition: fill 0.3s, filter 0.3s;
+        }
+
+        .bone-node:hover {
+            fill: var(--neon-orange) !important;
+            filter: drop-shadow(0 0 10px var(--neon-orange));
+        }
+
+        /* شبیه‌ساز گوشی موبایل برای پیامک */
+        .phone-mockup {
+            width: 300px;
+            height: 550px;
+            background: #000;
+            border: 8px solid #1F2937;
+            border-radius: 36px;
+            margin: 0 auto;
+            position: relative;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .phone-screen {
+            flex: 1;
+            background: #111827;
+            border-radius: 24px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+        }
+
+        .sms-bubble {
+            background: #1F2937;
+            border-radius: 12px 12px 0 12px;
+            padding: 10px;
+            font-size: 0.75rem;
+            max-width: 85%;
+            align-self: flex-start;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- سایدبار جابجایی بین ۱۰ ایده به صورت منظم -->
+    <div class="sidebar">
+        <div class="sidebar-header">آزمایشگاه تعاملی ۱۰ ایده</div>
+        
+        <button class="tab-btn active" onclick="openPilot(0, this)">۰۱. تست هوشمند ریسک</button>
+        <button class="tab-btn" onclick="openPilot(1, this)">۰۲. آناتومی تعاملی استخوان</button>
+        <button class="tab-btn" onclick="openPilot(2, this)">۰۳. دور زدن بلک‌لیست پیامک</button>
+        <button class="tab-btn" onclick="openPilot(3, this)">۰۴. پنل سه اصل آسودگی</button>
+        <button class="tab-btn" onclick="openPilot(4, this)">۰۵. پاسپورت کانسیرژ درمانی</button>
+        <button class="tab-btn" onclick="openPilot(5, this)">۰۶. غربالگری هوشمند خارج کشور</button>
+        <button class="tab-btn" onclick="openPilot(6, this)">۰۷. محاسبه‌گر ریسک FRAX</button>
+        <button class="tab-btn" onclick="openPilot(7, this)">۰۸. دستیار تریاژ نیمه‌خودکار</button>
+        <button class="tab-btn" onclick="openPilot(8, this)">۰۹. پوشه دیجیتال بدون رمز</button>
+        <button class="tab-btn" onclick="openPilot(9, this)">۱۰. ماتریس T-Score استخوان</button>
+    </div>
+
+    <!-- محفظه اصلی نمایش زنده و لایو عملکرد هر ایده -->
+    <div class="viewport">
+
+        <!-- پایلوت ۱: تست هوشمند ریسک -->
+        <div class="pilot-container active">
+            <h2 class="pilot-title">پایلوت ۱: تست هوشمند و تعاملی ریسک پوکی استخوان</h2>
+            <p class="pilot-desc">این کویز با پاسخ به سوالات زیر، ریسک پوکی استخوان را به همراه یک کپن تخفیف فعال‌سازی صادر می‌کند.</p>
+            
+            <div id="quiz-step-1">
+                <label style="font-size:0.85rem; font-weight:bold; display:block; margin-bottom:8px;">سوال ۱: سن شما چقدر است؟</label>
+                <input type="number" id="quiz-age" class="input-field" placeholder="مثال: ۵۲">
+                <button class="btn-action" onclick="runQuiz()">محاسبه ریسک و صدور هدیه</button>
+            </div>
+
+            <div class="output-box" id="quiz-output">
+                <h4 style="color:var(--neon-gold); margin-bottom:10px;">نتایج تحلیل هوشمند:</h4>
+                <div style="font-size:1.5rem; font-weight:900; margin-bottom:15px; color:var(--neon-orange);" id="quiz-risk-val">ریسک: ۷۵٪ (بالا)</div>
+                <p style="margin-bottom:15px;">پیشنهاد می‌شود جهت پیشگیری سریع، یک اسکن BMD رزرو کنید.</p>
+                
+                <!-- کپن تخفیف فعال‌سازی متکی به شرایط اقتصادی ایران -->
+                <div style="background:rgba(245, 158, 11, 0.1); border:1px dashed var(--neon-gold); padding:15px; border-radius:10px; text-align:center;">
+                    <div style="font-size:0.8rem; color:var(--text-muted);">کد کپن تخفیف فعال‌سازی ۱۰٪ (مهلت ۴۸ ساعت):</div>
+                    <div style="font-size:1.3rem; font-weight:900; color:var(--neon-gold); letter-spacing:3px; margin:5px 0;">BONE10</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- پایلوت ۲: آناتومی تعاملی استخوان -->
+        <div class="pilot-container">
+            <h2 class="pilot-title">پایلوت ۲: نقشه آناتومی تعاملی فوق‌سبک (SVG)</h2>
+            <p class="pilot-desc">برای تست سرعت لود فیزیکی و مینی‌مال بودن، روی مفاصل شکل زیر کلیک یا لمس کنید تا متد درمانی مخصوص فاش شود.</p>
+            
+            <div class="skeletal-svg-container">
+                <svg width="200" height="300" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid rgba(255,255,255,0.05); border-radius:15px; padding:20px;">
+                    <!-- سر -->
+                    <circle cx="50" cy="20" r="10" fill="#1E293B" stroke="var(--card-border)" stroke-width="1.5"/>
+                    <!-- ستون فقرات -->
+                    <line x1="50" y1="30" x2="50" y2="80" stroke="var(--card-border)" stroke-width="3"/>
+                    <!-- مفصل کمر -->
+                    <circle class="bone-node" cx="50" cy="65" r="5" fill="#334155" onclick="showBoneDetail('کمر', 'درمان دردهای حاد ستون فقرات و دیسک کمر با دستگاه فوق‌دقیق BMD مطب دکتر رادمنش.')"/>
+                    <!-- مفصل زانو چپ -->
+                    <circle class="bone-node" cx="40" cy="110" r="5" fill="#334155" onclick="showBoneDetail('زانو', 'تزریق ژل‌های غضروف‌ساز زانو و کنترل آرتروز با روش‌های غیرتهاجمی روماتولوژی.')"/>
+                    <!-- زانو راست -->
+                    <circle class="bone-node" cx="60" cy="110" r="5" fill="#334155" onclick="showBoneDetail('زانو', 'تزریق ژل‌های غضروف‌ساز زانو و کنترل آرتروز با روش‌های غیرتهاجمی روماتولوژی.')"/>
+                </svg>
+            </div>
+
+            <div class="output-box" id="bone-output">
+                <h4 style="color:var(--neon-gold); margin-bottom:10px;" id="bone-title">جزئیات مفصل</h4>
+                <p id="bone-desc">روی مفاصل نقشه بالا کلیک کنید...</p>
+            </div>
+        </div>
+
+        <!-- پایلوت ۳: دور زدن بلک‌لیست پیامک -->
+        <div class="pilot-container">
+            <h2 class="pilot-title">پایلوت ۳: پیگیری هوشمند چندکاناله با دور زدن بلک‌لیست پیامکی</h2>
+            <p class="pilot-desc">شبیه‌سازی ارسال پیامک کوتاه خدماتی (Pattern) که هرگز توسط بلک‌لیست‌ها مسدود نمی‌شود.</p>
+            
+            <button class="btn-action" onclick="runSmsSim()">شلیک خودکار پیامک خدماتی</button>
+
+            <div style="margin-top: 25px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                <div class="phone-mockup">
+                    <div style="text-align: center; font-size: 0.65rem; color: var(--text-muted); margin-bottom: 5px;">SMS Inbox</div>
+                    <div class="phone-screen" id="sms-screen">
+                        <!-- پیامک‌ها ظاهر می‌شوند -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- پایلوت ۴: پنل سه اصل آسودگی -->
+        <div class="pilot-container">
+            <h2 class="pilot-title">پایلوت ۴: پنل سه اصل آسودگی سنجش تراکم استخوان</h2>
+            <p class="pilot-desc">پاسخ به ۳ دغدغه و ترس بزرگ بیمار ایرانی در جهت ترغیب صددرصدی به رزرو تست.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); padding: 20px; border-radius: 12px; cursor: pointer;" onclick="alert('پاسخ: خیر، کاملاً بدون درد، بدون تزریق و مانند خوابیدن روی تخت نرم است.')">
+                    <h4 style="color: var(--neon-gold); margin-bottom: 8px;">۱. آیا درد دارد؟</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">کلیک کنید تا پاسخ علمی باز شود...</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); padding: 20px; border-radius: 12px; cursor: pointer;" onclick="alert('پاسخ: میزان تابش اشعه کمتر از امواج طبیعی محیط است (ایمن برای سالمندان).')">
+                    <h4 style="color: var(--neon-gold); margin-bottom: 8px;">۲. آیا ضرر دارد؟</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">کلیک کنید تا پاسخ علمی باز شود...</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); padding: 20px; border-radius: 12px; cursor: pointer;" onclick="alert('پاسخ: تحت پوشش کامل بیمه تامین اجتماعی و تکمیلی با تعرفه شفاف وزارت بهداشت.')">
+                    <h4 style="color: var(--neon-gold); margin-bottom: 8px;">۳. هزینه آن چقدر است؟</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">کلیک کنید تا پاسخ علمی باز شود...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- پایلوت ۵: پاسپورت کانسیرژ درمانی -->
+        <div class="pilot-container">
+            <h2 class="pilot-title">پایلوت ۵: پاسپورت دیجیتال کانسیرژ درمانی شیراز</h2>
+            <p class="pilot-desc">شبیه‌ساز هماهنگی هتلینگ، مسیریابی و تاخیر در جاده برای مراجعین گران‌قیمت غیربومی.</p>
+            
+            <div class="form-group">
+                <label>مبدا حرکت خود را انتخاب کنید:</label>
+                <select id="travel-origin" class="input-field" style="background:#000;">
+                    <option value="بوشهر">بوشهر (زمینی با خودرو)</option>
+                    <option value="بندرعباس">بندرعباس (پروازی)</option>
+                </select>
+            </div>
+            <button class="btn-action" onclick="runTravelConcierge()">صدور پاسپورت سفر درمانی</button>
+
+            <div class="output-box" id="concierge-output">
+                <h4 style="color:var(--neon-gold); margin-bottom:10px;">پاسپورت سلامت صادر شد!</h4>
+                <p id="passport-details"></p>
+            </div>
+        </div>
+
+        <!-- پایلوت ۶: غربالگری هوشمند خارج کشور -->
+        <div class="pilot-container">
+            <h2 class="pilot-title">پایلوت ۶: پورتال غربالگری مراجعین خارج از شیراز</h2>
+            <p class="pilot-desc">بیمار قبل از حرکت، آزمایشات خون خود را ثبت می‌کند تا پرونده در CRM مطب ساخته شود.</p>
+            
+            <div class="form-group">
+                <label>میزان کلسیم خون شما (Calcium):</label>
+                <input type="text" id="screen-cal" class="input-field" placeholder="مثال: ۸.۵">
+            </div>
+            <button class="btn-action" onclick="runScreening()">ارسال پرونده غربالگری</button>
+
+            <div class="output-box" id="screen-output">
+                <h4 style="color:var(--neon-gold); margin-bottom:10px;">پرونده پزشکی در CRM ثبت شد:</h4>
+                <p id="screen-result"></p>
+            </div>
+        </div>
+
+        <!-- پایلوت ۷: محاسبه‌گر ریسک FRAX -->
+        <div class="pilot-container">
+            <h2 class="pilot-title">پایلوت ۷: محاسبه‌گر استاندارد ریسک شکستگی استخوان (FRAX)</h2>
+            <p class="pilot-desc">محاسبه علمی درصد احتمال شکستگی استخوان‌های بیمار در ۱۰ سال آینده مبتنی بر وزن و سوابق.</p>
+            
+            <div class="form-group">
+                <label>آیا سابقه شکستگی قبلی دارید؟</label>
+                <select id="frax-history" class="input-field" style="background:#000;">
+                    <option value="yes">بله، دارم</option>
+                    <option value="no">خیر، ندارم</option>
+                </select>
+            </div>
+            <button class="btn-action" onclick="runFrax()">محاسبه علمی درصد ریسک</button>
+
+            <div class="output-box" id="frax-output">
+                <h4 style="color:var(--neon-gold); margin-bottom:10px;">احتمال شکستگی استخوان در ۱۰ سال آینده:</h4>
+                <div style="font-size:1.5rem; font-weight:900; color:var(--danger);" id="frax-val">۳۵٪ (ریسک بالا)</div>
+            </div>
+        </div>
+
+        <!-- پایلوت ۸: دستیار تریاژ نیمه‌خودکار -->
+        <div class="pilot-container">
+            <h2 class="pilot-title">پایلوت ۸: دستیار تریاژ نیمه‌خودکار مطب (AI Triage Agent)</h2>
+            <p class="pilot-desc">شبیه‌سازی چت تعاملی بیمار با هوش مصنوعی مطب با حفظ کامل ایمنی پزشک.</p>
+            
+            <div class="form-group">
+                <label>سوال پزشکی خود را بنویسید:</label>
+                <input type="text" id="triage-query" class="input-field" placeholder="مثال: آیا روماتیسم درمان قطعی دارد؟">
+            </div>
+            <button class="btn-action" onclick="runTriage()">پرسش از دستیار دیجیتال</button>
+
+            <div class="output-box" id="triage-output">
+                <h4 style="color:var(--neon-gold); margin-bottom:10px;">پاسخ دستیار هوشمند:</h4>
+                <p id="triage-result"></p>
+            </div>
+        </div>
+
+        <!-- پایلوت ۹: پوشه دیجیتال بدون رمز -->
+        <div class="pilot-container">
+            <h2 class="pilot-title">پایلوت ۹: پرونده دیجیتال سلامت استخوان با ورود بدون رمز (OTP)</h2>
+            <p class="pilot-desc">بیمار مسن به راحتی با کدهای یک‌بار مصرف پیامکی وارد کارتابل فاکتورها و آزمایشات خود می‌شود.</p>
+            
+            <div class="form-group">
+                <label>شماره همراه بیمار:</label>
+                <input type="tel" id="otp-phone" class="input-field" style="direction:ltr; text-align:left;" placeholder="09123456789">
+            </div>
+            <button class="btn-action" onclick="runOtpLogin()">درخواست پیامک ورود</button>
+
+            <div class="output-box" id="otp-output">
+                <h4 style="color:var(--neon-gold); margin-bottom:10px;">ورود موفقیت‌آمیز به پرونده بیمار!</h4>
+                <p style="color:var(--success); font-weight:bold;">T-Score شما در آخرین اسکن: -۲.۵ (در محدوده پوکی استخوان لگن)</p>
+            </div>
+        </div>
+
+        <!-- پایلوت ۱۰: ماتریس T-Score استخوان -->
+        <div class="pilot-container">
+            <h2 class="pilot-title">پایلوت ۱۰: ماتریس هوشمند تحلیل تراکم استخوان بر اساس T-Score</h2>
+            <p class="pilot-desc">بیمار عدد شاخص تراکم استخوان خود را وارد کرده و سند مراقبتی تراز اول همان گروه را می‌گیرد.</p>
+            
+            <div class="form-group">
+                <label>عدد T-Score آزمایش شما چیست؟</label>
+                <input type="text" id="tscore-val" class="input-field" placeholder="مثال: -2.5">
+            </div>
+            <button class="btn-action" onclick="runTscoreMatrix()">ثبت و تحلیل تراکم استخوان</button>
+
+            <div class="output-box" id="tscore-output">
+                <h4 style="color:var(--neon-gold); margin-bottom:10px;" id="tscore-status-title">وضعیت: پوکی استخوان (قرمز)</h4>
+                <p id="tscore-adv" style="margin-bottom: 15px;"></p>
+                <button class="btn-action" style="background:rgba(255,255,255,0.05); color:white; border:1px solid var(--card-border);" onclick="alert('سند PDF مراقبت گروه شما دانلود شد!')">دانلود سند ۳ قانون طلایی پیشگیری</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- کدهای مغز پویای آزمایشگاه لایو ۱۰ ایده -->
+    <script>
+        // جابجایی بین ۱۰ کادر ایده به صورت تعاملی
+        function openPilot(index, btnElement) {
+            // غیرفعال کردن تب‌های سایدبار
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // مخفی کردن کادرهای خروجی
+            const containers = document.querySelectorAll('.pilot-container');
+            containers.forEach(container => container.classList.remove('active'));
+            containers[index].classList.add('active');
+        }
+
+        // پایلوت ۱
+        function runQuiz() {
+            const age = document.getElementById('quiz-age').value;
+            if (age === '') { alert('لطفاً سن را وارد کنید.'); return; }
+            document.getElementById('quiz-output').style.display = 'block';
+        }
+
+        // پایلوت ۲
+        function showBoneDetail(name, desc) {
+            document.getElementById('bone-output').style.display = 'block';
+            document.getElementById('bone-title').innerText = "توضیحات مفصل " + name;
+            document.getElementById('bone-desc').innerText = desc;
+        }
+
+        // پایلوت ۳
+        function runSmsSim() {
+            const screen = document.getElementById('sms-screen');
+            screen.innerHTML = `
+                <div class="sms-bubble">
+                    <strong>فرستنده: Parsa.Studio</strong><br>
+                    سلام جناب علوی گرامی، پارسا هستم. نوبت اسکن تراکم استخوان (BMD) شما تایید شد. جزئیات در: parsa.link/sara
+                </div>
+            `;
+            alert('پیامک کوتاه با دور زدن بلک‌لیست مخابراتی با موفقیت ارسال شد!');
+        }
+
+        // پایلوت ۵
+        function runTravelConcierge() {
+            const origin = document.getElementById('travel-origin').value;
+            const details = document.getElementById('passport-details');
+            document.getElementById('concierge-output').style.display = 'block';
+
+            if (origin === 'بوشهر') {
+                details.innerHTML = `
+                    <strong>مسیر جاده‌ای بوشهر به شیراز:</strong> حدود ۴ ساعت.<br>
+                    <strong>همگام‌سازی جاده‌ای فعال است:</strong> در صورت بروز ترافیک دکمه "اعلام تاخیر" را بزنید تا منشی نوبت را عقب بکشد.<br>
+                    <strong>اقامت هماهنگ (سطح برنز):</strong> سوئیت‌های روزانه تایید شده و تمیز با پارکینگ امن در خیابان زند شیراز. کدملی را به سوئیت ارائه دهید.
+                `;
+            } else {
+                details.innerHTML = `
+                    <strong>مسیر پروازی بندرعباس به شیراز:</strong> ۱ ساعت.<br>
+                    <strong>اقامت هماهنگ (سطح طلایی):</strong> هتل‌های سنتی سنتی شیراز با ۲۰٪ تخفیف انحصاری مطب دکتر رادمنش.
+                `;
+            }
+        }
+
+        // پایلوت ۶
+        function runScreening() {
+            const cal = document.getElementById('screen-cal').value;
+            if (cal === '') { alert('مقدار کلسیم را وارد کنید.'); return; }
+            document.getElementById('screen-output').style.display = 'block';
+            document.getElementById('screen-result').innerText = `کلسیم خون ثبت شده: ${cal}. این داده برای دکتر سارا به صورت خلاصه پرونده آماده شد تا در زمان ویزیت صدم‌ثانیه‌ای تصمیم بگیرند.`;
+        }
+
+        // پایلوت ۷
+        function runFrax() {
+            document.getElementById('frax-output').style.display = 'block';
+        }
+
+        // پایلوت ۸
+        function runTriage() {
+            const query = document.getElementById('triage-query').value.trim();
+            if (query === '') { alert('سوال را وارد کنید.'); return; }
+            document.getElementById('triage-output').style.display = 'block';
+            document.getElementById('triage-result').innerText = `سوال شما ثبت شد: "${query}". به علت تخصصی بودن و حفظ ایمنی پزشکی، این سوال در پرونده CRM شما ثبت شد تا خانم دکتر رادمنش در زمان ویزیت حضوری شخصاً آن را تحلیل کنند.`;
+        }
+
+        // پایلوت ۹
+        function runOtpLogin() {
+            const phone = document.getElementById('otp-phone').value;
+            if (phone === '') { alert('شماره همراه را وارد کنید.'); return; }
+            document.getElementById('otp-output').style.display = 'block';
+        }
+
+        // پایلوت ۱۰
+        function runTscoreMatrix() {
+            const val = parseFloat(document.getElementById('tscore-val').value);
+            if (isNaN(val)) { alert('عدد T-Score معتبر وارد کنید.'); return; }
+            const out = document.getElementById('tscore-output');
+            out.style.display = 'block';
+
+            const title = document.getElementById('tscore-status-title');
+            const adv = document.getElementById('tscore-adv');
+
+            if (val >= -1.0) {
+                title.innerText = "وضعیت: استخوان‌های نرمال (سبز)";
+                title.style.color = "var(--success)";
+                adv.innerText = "۳ قانون طلایی شما: مصرف روزانه ۱۰۰۰ میلی‌گرم کلسیم، پیاده‌روی روزانه ۲۰ دقیقه، و پایش مجدد تراکم استخوان در ۲ سال آینده.";
+            } else if (val < -1.0 && val > -2.5) {
+                title.innerText = "وضعیت: استئوپنی یا کاهش تراکم (زرد)";
+                title.style.color = "var(--neon-gold)";
+                adv.innerText = "۳ قانون طلایی شما: شروع مصرف مکمل ویتامین D3، تمرینات مفصلی ملایم روزانه، و ویزیت روماتولوژی جهت مهار سریع تحلیل رفتگی.";
+            } else {
+                title.innerText = "وضعیت: پوکی استخوان شدید (قرمز)";
+                title.style.color = "var(--danger)";
+                adv.innerText = "۳ قانون طلایی شما: پرهیز از برداشتن وسایل سنگین، هماهنگی فوری با دکتر رادمنش جهت شروع درمان دارویی، و استفاده از خدمات کانسیرژ مسافرتی مطب.";
+            }
+        }
+    </script>
+</body>
+</html>
