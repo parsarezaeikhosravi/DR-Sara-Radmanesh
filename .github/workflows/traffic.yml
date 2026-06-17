@@ -20,3 +20,6 @@ jobs:
         with:
           my_token: ${{ secrets.GITHUB_TOKEN }}
           static_list: "Parsa-Studio, dr-sara-radmanesh" # نام مخازن شما
+      with:
+        my_token: ${{ secrets.GITHUB_TOKEN }}
+        static_list: "Parsa-Studio, DR-Sara-Radmanesh" # حروف بزرگ D, R, S, R, M رعایت شوند
